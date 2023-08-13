@@ -7,27 +7,15 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 
 const gallery = document.querySelector('.gallery');
 
-const images = galleryItems.map(item => {
+const images = galleryItems.map(item => `
+    <li class="gallery__item">
+        <a class="gallery__link" href=${item.original}>
+            <img class="gallery__image" src=${item.preview} alt=${item.description} />
+        </a>
+    </li>`
+);
 
-    let listItem = document.createElement('li');
-    listItem.classList.add('gallery__item');
-
-    let link = document.createElement('a');
-    link.classList.add('gallery__link');
-    link.href = item.original;
-
-    let img = document.createElement('img');
-    img.classList.add('gallery__image');
-    img.src = item.preview;
-    img.alt = item.description;
-
-    link.append(img);
-    listItem.append(link);
-
-    return listItem
-});
-
-gallery.append(...images);
+gallery.innerHTML = images.join('');
 
 let options = {
     captionsData: 'alt',
@@ -35,6 +23,5 @@ let options = {
 };
 
 new SimpleLightbox('.gallery a', options);
-
 
 console.log(galleryItems);

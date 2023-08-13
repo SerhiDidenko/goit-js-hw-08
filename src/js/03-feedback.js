@@ -2,10 +2,10 @@ import throttle  from "lodash.throttle";
 
 const form = document.querySelector('.feedback-form');
 const { elements: { email, message } } = form;
-let feedbackData
 
 try {
-    let formItems = JSON.parse(localStorage.getItem("feedback-form-state"))
+    let ls = localStorage.getItem("feedback-form-state")
+    let formItems = ls ? JSON.parse(ls) : {email: '', message: ''}
     email.value = formItems.email;
     message.value = formItems.message;
 } catch (error) {
@@ -25,11 +25,10 @@ const getFormData = throttle((evt) => {
 const submitEvent = (evt) => {
     evt.preventDefault();
     localStorage.removeItem("feedback-form-state");
-    let formData = JSON.stringify({
+    console.log({
         email: email.value,
         message: message.value
-    })
-    console.log(formData);
+    });
     evt.currentTarget.reset();
 }
 
